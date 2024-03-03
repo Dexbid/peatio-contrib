@@ -5,7 +5,7 @@ require "faraday"
 require "better-faraday"
 
 module Peatio
-  module Dash
+  module MarbleWave
     class Client
       Error = Class.new(StandardError)
       ConnectionError = Class.new(Error)

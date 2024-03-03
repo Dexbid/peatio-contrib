@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Peatio
-  module Dash
+  module MarbleWave
     class Wallet < Peatio::Wallet::Abstract
       DEFAULT_FEATURES = { skip_deposit_collection: false }.freeze
 
@@ -27,7 +27,7 @@ module Peatio
 
       def create_address!(_options={})
         {address: client.json_rpc(:getnewaddress)}
-      rescue Dash::Client::Error => e
+      rescue MarbleWave::Client::Error => e
         raise Peatio::Wallet::ClientError, e
       end
 
@@ -42,13 +42,13 @@ module Peatio
                                ])
         transaction.hash = txid
         transaction
-      rescue Dash::Client::Error => e
+      rescue MarbleWave::Client::Error => e
         raise Peatio::Wallet::ClientError, e
       end
 
       def load_balance!
         client.json_rpc(:getbalance).to_d
-      rescue Dash::Client::Error => e
+      rescue MarbleWave::Client::Error => e
         raise Peatio::Wallet::ClientError, e
       end
 

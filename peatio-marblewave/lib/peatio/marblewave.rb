@@ -5,16 +5,16 @@ require "active_support/core_ext/enumerable"
 require "peatio"
 
 module Peatio
-  module Dash
+  module MarbleWave
     require "bigdecimal"
     require "bigdecimal/util"
 
-    require "peatio/dash/blockchain"
-    require "peatio/dash/client"
-    require "peatio/dash/wallet"
+    require "peatio/marblewave/blockchain"
+    require "peatio/marblewave/client"
+    require "peatio/marblewave/wallet"
 
-    require "peatio/dash/hooks"
+    require "peatio/marblewave/hooks"
 
-    require "peatio/dash/version"
+    require "peatio/marblewave/version"
   end
 end

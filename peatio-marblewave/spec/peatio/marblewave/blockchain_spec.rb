@@ -1,31 +1,31 @@
 # frozen_string_literal: true
 
-RSpec.describe Peatio::Dash::Blockchain do
+RSpec.describe Peatio::MarbleWave::Blockchain do
   context :features do
     it "defaults" do
-      blockchain1 = Peatio::Dash::Blockchain.new
-      expect(blockchain1.features).to eq Peatio::Dash::Blockchain::DEFAULT_FEATURES
+      blockchain1 = Peatio::MarbleWave::Blockchain.new
+      expect(blockchain1.features).to eq Peatio::MarbleWave::Blockchain::DEFAULT_FEATURES
     end
 
     it "override defaults" do
-      blockchain2 = Peatio::Dash::Blockchain.new(cash_addr_format: true)
+      blockchain2 = Peatio::MarbleWave::Blockchain.new(cash_addr_format: true)
       expect(blockchain2.features[:cash_addr_format]).to be_truthy
     end
 
     it "custom feautures" do
-      blockchain3 = Peatio::Dash::Blockchain.new(custom_feature: :custom)
-      expect(blockchain3.features.keys).to contain_exactly(*Peatio::Dash::Blockchain::SUPPORTED_FEATURES)
+      blockchain3 = Peatio::MarbleWave::Blockchain.new(custom_feature: :custom)
+      expect(blockchain3.features.keys).to contain_exactly(*Peatio::MarbleWave::Blockchain::SUPPORTED_FEATURES)
     end
   end
 
   context :configure do
-    let(:blockchain) { Peatio::Dash::Blockchain.new }
+    let(:blockchain) { Peatio::MarbleWave::Blockchain.new }
     it "default settings" do
       expect(blockchain.settings).to eq({})
     end
 
     it "currencies and server configuration" do
-      currencies = [{id: :dash,
+      currencies = [{id: :marblewave,
                       base_factor: 100_000_000,
                       options: {}}]
       settings = {server: "http://admin:admin@127.0.0.1:19998",
@@ -52,7 +52,7 @@ RSpec.describe Peatio::Dash::Blockchain do
     end
 
     let(:blockchain) do
-      Peatio::Dash::Blockchain.new.tap {|b| b.configure(server: server) }
+      Peatio::MarbleWave::Blockchain.new.tap {|b| b.configure(server: server) }
     end
 
     before do
@@ -105,7 +105,7 @@ RSpec.describe Peatio::Dash::Blockchain do
               "hex" => "76a914711cddcba317b1cec613c802c9b79645ead976d488ac",
               "reqSigs" => 1,
               "type" => "pubkeyhash",
-              "addresses" => ["yWdXnYxGbouNoo8yMvcbZmZ3Gdp6BpySxL"]}},
+              "addresses" => ["nWdXnYxGbouNoo8yMvcbZmZ3Gdp6BpySxL"]}},
           {"value" => 74.54849774,
            "valueSat" => 7_454_849_774,
            "n" => 1,
@@ -114,7 +114,7 @@ RSpec.describe Peatio::Dash::Blockchain do
               "hex" => "76a91478e0a89f3c685eb79ef802caab84fe7c8e3d322788ac",
               "reqSigs" => 1,
               "type" => "pubkeyhash",
-              "addresses" => ["yXLb4nGyxE6k5D2HZ6LE3T1kgpjiYSnLFr"]}}],
+              "addresses" => ["nXLb4nGyxE6k5D2HZ6LE3T1kgpjiYSnLFr"]}}],
        "hex" =>
          "0200000000010128b432862b8e4022ec1302086e6eb4b63c88fe09be89ce532859b2c1fa7455fc0000000017160014ab96ef2628ff8"\
          "73662ebd77f522aecf16c224495feffffff03809698000000000017a914869bf1331ba9fe042ba7c06455d8c2bcb0b2a20887002d31"\
@@ -128,26 +128,26 @@ RSpec.describe Peatio::Dash::Blockchain do
       let(:expected_transactions) do
         [{hash: "5809bc3d1f0c72f318a28d1dc16fa268b7ec6405c64acf1e7af8f2c483a7cafc",
           txout: 0,
-          to_address: "yWdXnYxGbouNoo8yMvcbZmZ3Gdp6BpySxL",
+          to_address: "nWdXnYxGbouNoo8yMvcbZmZ3Gdp6BpySxL",
           amount: 0.4999e2,
           status: "success",
-          currency_id: :dash},
+          currency_id: :marblewave},
          {hash: "5809bc3d1f0c72f318a28d1dc16fa268b7ec6405c64acf1e7af8f2c483a7cafc",
           txout: 1,
-          to_address: "yXLb4nGyxE6k5D2HZ6LE3T1kgpjiYSnLFr",
+          to_address: "nXLb4nGyxE6k5D2HZ6LE3T1kgpjiYSnLFr",
           amount: 0.7454849774e2,
           status: "success",
-          currency_id: :dash}]
+          currency_id: :marblewave}]
       end
 
       let(:currency) do
-        {id: :dash,
+        {id: :marblewave,
           base_factor: 100_000_000,
           options: {}}
       end
 
       let(:blockchain) do
-        Peatio::Dash::Blockchain.new.tap {|b| b.configure(currencies: [currency]) }
+        Peatio::MarbleWave::Blockchain.new.tap {|b| b.configure(currencies: [currency]) }
       end
 
       it "builds formatted transactions for passed transaction" do
@@ -157,13 +157,13 @@ RSpec.describe Peatio::Dash::Blockchain do
 
     context "multiple currencies" do
       let(:currency1) do
-        {id: :dash1,
+        {id: :marblewave1,
           base_factor: 100_000_000,
           options: {}}
       end
 
       let(:currency2) do
-        {id: :dash2,
+        {id: :marblewave2,
           base_factor: 100_000_000,
           options: {}}
       end
@@ -171,32 +171,32 @@ RSpec.describe Peatio::Dash::Blockchain do
       let(:expected_transactions) do
         [{hash: "5809bc3d1f0c72f318a28d1dc16fa268b7ec6405c64acf1e7af8f2c483a7cafc",
           txout: 0,
-          to_address: "yWdXnYxGbouNoo8yMvcbZmZ3Gdp6BpySxL",
+          to_address: "nWdXnYxGbouNoo8yMvcbZmZ3Gdp6BpySxL",
           amount: 0.4999e2,
           status: "success",
-          currency_id: :dash1},
+          currency_id: :marblewave1},
          {hash: "5809bc3d1f0c72f318a28d1dc16fa268b7ec6405c64acf1e7af8f2c483a7cafc",
           txout: 0,
-          to_address: "yWdXnYxGbouNoo8yMvcbZmZ3Gdp6BpySxL",
+          to_address: "nWdXnYxGbouNoo8yMvcbZmZ3Gdp6BpySxL",
           amount: 0.4999e2,
           status: "success",
-          currency_id: :dash2},
+          currency_id: :marblewave2},
          {hash: "5809bc3d1f0c72f318a28d1dc16fa268b7ec6405c64acf1e7af8f2c483a7cafc",
           txout: 1,
-          to_address: "yXLb4nGyxE6k5D2HZ6LE3T1kgpjiYSnLFr",
+          to_address: "nXLb4nGyxE6k5D2HZ6LE3T1kgpjiYSnLFr",
           amount: 0.7454849774e2,
           status: "success",
-          currency_id: :dash1},
+          currency_id: :marblewave1},
          {hash: "5809bc3d1f0c72f318a28d1dc16fa268b7ec6405c64acf1e7af8f2c483a7cafc",
           txout: 1,
-          to_address: "yXLb4nGyxE6k5D2HZ6LE3T1kgpjiYSnLFr",
+          to_address: "nXLb4nGyxE6k5D2HZ6LE3T1kgpjiYSnLFr",
           amount: 0.7454849774e2,
           status: "success",
-          currency_id: :dash2}]
+          currency_id: :marblewave2}]
       end
 
       let(:blockchain) do
-        Peatio::Dash::Blockchain.new.tap do |b|
+        Peatio::MarbleWave::Blockchain.new.tap do |b|
           b.configure(currencies: [currency1, currency2])
         end
       end
@@ -208,13 +208,13 @@ RSpec.describe Peatio::Dash::Blockchain do
 
     context "single vout transaction" do
       let(:currency) do
-        {id: :dash,
+        {id: :marblewave,
           base_factor: 100_000_000,
           options: {}}
       end
 
       let(:blockchain) do
-        Peatio::Dash::Blockchain.new.tap {|b| b.configure(currencies: [currency]) }
+        Peatio::MarbleWave::Blockchain.new.tap {|b| b.configure(currencies: [currency]) }
       end
 
       let(:raw_transaction) do
@@ -232,7 +232,7 @@ RSpec.describe Peatio::Dash::Blockchain do
               "hex" => "76a914711cddcba317b1cec613c802c9b79645ead976d488ac",
               "reqSigs" => 1,
               "type" => "pubkeyhash",
-              "addresses" => ["yWdXnYxGbouNoo8yMvcbZmZ3Gdp6BpySxL"]}}],
+              "addresses" => ["nWdXnYxGbouNoo8yMvcbZmZ3Gdp6BpySxL"]}}],
          "hex" =>
            "02000000017c89ccd0f64958cd83bd67a11bd28c2cdc7c5a117585446ca1abe22359398d37000000006a473044022022f8b9b830a"\
            "21b61b369fbb650596868cfdb5185d4804e471d8f83245ebcb6d402206739b8e1cc5616c7a9dbcf165b23dee4c6b9b8deae7b4ac5"\
@@ -244,7 +244,7 @@ RSpec.describe Peatio::Dash::Blockchain do
       let(:expected_transactions) do
         [{hash: "5809bc3d1f0c72f318a28d1dc16fa268b7ec6405c64acf1e7af8f2c483a7cafc",
           txout: 0,
-          to_address: "yWdXnYxGbouNoo8yMvcbZmZ3Gdp6BpySxL",
+          to_address: "nWdXnYxGbouNoo8yMvcbZmZ3Gdp6BpySxL",
           amount: "49.99".to_d,
           status: "success",
           currency_id: currency[:id]}]
@@ -280,7 +280,7 @@ RSpec.describe Peatio::Dash::Blockchain do
     end
 
     let(:blockchain) do
-      Peatio::Dash::Blockchain.new.tap {|b| b.configure(server: server) }
+      Peatio::MarbleWave::Blockchain.new.tap {|b| b.configure(server: server) }
     end
 
     before do
@@ -298,7 +298,7 @@ RSpec.describe Peatio::Dash::Blockchain do
     end
 
     let(:currency) do
-      {id: :dash,
+      {id: :marblewave,
         base_factor: 100_000_000,
         options: {}}
     end
@@ -306,7 +306,7 @@ RSpec.describe Peatio::Dash::Blockchain do
     let(:server) { "http://admin:admin@127.0.0.1:19998" }
     let(:server_without_authority) { "http://127.0.0.1:19998" }
     let(:blockchain) do
-      Peatio::Dash::Blockchain.new.tap {|b| b.configure(server: server, currencies: [currency]) }
+      Peatio::MarbleWave::Blockchain.new.tap {|b| b.configure(server: server, currencies: [currency]) }
     end
 
     subject { blockchain.fetch_block!(117_839) }
@@ -336,7 +336,7 @@ RSpec.describe Peatio::Dash::Blockchain do
     end
 
     let(:blockchain) do
-      Peatio::Dash::Blockchain.new.tap {|b| b.configure(server: server) }
+      Peatio::MarbleWave::Blockchain.new.tap {|b| b.configure(server: server) }
     end
 
     before do
@@ -349,17 +349,17 @@ RSpec.describe Peatio::Dash::Blockchain do
 
     context "address with balance is defined" do
       it "requests rpc listaddressgroupings and finds address balance" do
-        address = "yXvnaB7Xbwi2kv7BzqktJRghFn3hhUUyvd"
+        address = "nXvnaB7Xbwi2kv7BzqktJRghFn3hhUUyvd"
 
-        result = blockchain.load_balance_of_address!(address, :dash)
+        result = blockchain.load_balance_of_address!(address, :marblewave)
         expect(result).to be_a(BigDecimal)
         expect(result).to eq("132.6129".to_d)
       end
 
       it "requests rpc listaddressgroupings and finds address with zero balance" do
-        address = "yYV5LHb6FVY5qWx7nrfARNVwRyHwLoXcQu"
+        address = "nYV5LHb6FVY5qWx7nrfARNVwRyHwLoXcQu"
 
-        result = blockchain.load_balance_of_address!(address, :dash)
+        result = blockchain.load_balance_of_address!(address, :marblewave)
         expect(result).to be_a(BigDecimal)
         expect(result).to eq("0".to_d)
       end
@@ -367,8 +367,8 @@ RSpec.describe Peatio::Dash::Blockchain do
 
     context "address is not defined" do
       it "requests rpc listaddressgroupings and do not find address" do
-        address = "yY75oNb6FVY5qWx7nrfARNVwRyHwLoXcQu"
-        expect { blockchain.load_balance_of_address!(address, :dash) }
+        address = "nY75oNb6FVY5qWx7nrfARNVwRyHwLoXcQu"
+        expect { blockchain.load_balance_of_address!(address, :marblewave) }
           .to raise_error(Peatio::Blockchain::UnavailableAddressBalanceError)
       end
     end
@@ -385,7 +385,7 @@ RSpec.describe Peatio::Dash::Blockchain do
       end
 
       it "raise wrapped client error" do
-        expect { blockchain.load_balance_of_address!("anything", :dash) }
+        expect { blockchain.load_balance_of_address!("anything", :marblewave) }
           .to raise_error(Peatio::Blockchain::ClientError)
       end
     end

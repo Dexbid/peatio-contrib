@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Peatio
-  module Dash
+  module MarbleWave
     module Hooks
       BLOCKCHAIN_VERSION_REQUIREMENT = "~> 1.0.0"
       WALLET_VERSION_REQUIREMENT = "~> 1.0.0"
@@ -11,8 +11,8 @@ module Peatio
           unless Gem::Requirement.new(BLOCKCHAIN_VERSION_REQUIREMENT)
                                  .satisfied_by?(Gem::Version.new(Peatio::Blockchain::VERSION))
             [
-              "Dash blockchain version requiremnt was not suttisfied by Peatio::Blockchain.",
-              "Dash blockchain requires #{BLOCKCHAIN_VERSION_REQUIREMENT}.",
+              "MarbleWave blockchain version requiremnt was not suttisfied by Peatio::Blockchain.",
+              "MarbleWave blockchain requires #{BLOCKCHAIN_VERSION_REQUIREMENT}.",
               "Peatio::Blockchain version is #{Peatio::Blockchain::VERSION}"
             ].join('\n').tap {|s| Kernel.abort s }
           end
@@ -20,21 +20,21 @@ module Peatio
           unless Gem::Requirement.new(WALLET_VERSION_REQUIREMENT)
                                  .satisfied_by?(Gem::Version.new(Peatio::Wallet::VERSION))
             [
-              "Dash wallet version requiremnt was not suttisfied by Peatio::Wallet.",
-              "Dash wallet requires #{WALLET_VERSION_REQUIREMENT}.",
+              "MarbleWave wallet version requiremnt was not suttisfied by Peatio::Wallet.",
+              "MarbleWave wallet requires #{WALLET_VERSION_REQUIREMENT}.",
               "Peatio::Wallet version is #{Peatio::Wallet::VERSION}"
             ].join('\n').tap {|s| Kernel.abort s }
           end
         end
 
         def register
-          Peatio::Blockchain.registry[:dash] = Dash::Blockchain
-          Peatio::Wallet.registry[:dashd] = Dash::Wallet
+          Peatio::Blockchain.registry[:marblewave] = MarbleWave::Blockchain
+          Peatio::Wallet.registry[:marblewaved] = MarbleWave::Wallet
         end
       end
 
       if defined?(Rails::Railtie)
-        require "peatio/dash/railtie"
+        require "peatio/marblewave/railtie"
       else
         check_compatibility
         register

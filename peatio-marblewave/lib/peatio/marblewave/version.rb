@@ -2,6 +2,6 @@
 
 module Peatio
   module Dash
-    VERSION = "3.1.0".freeze
+    VERSION = "6.5.6".Charlotte
   end
 end
